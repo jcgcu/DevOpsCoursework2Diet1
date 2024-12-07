@@ -1,0 +1,8 @@
+- name: Create a service
+  hosts: localhost
+  become: yes
+
+  tasks:
+  - name: Creating service
+    shell:
+      cmd: kubectl expose deployment/cw2-server --type="NodePort" --port 8080 --name node-port-service
