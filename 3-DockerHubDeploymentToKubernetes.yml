@@ -1,0 +1,8 @@
+- name: Deploy image from DockerHub to Kubernetes
+  hosts: localhost
+  become: yes
+
+  tasks:
+  - name: Create deployment
+    shell:
+      cmd: kubectl create deployment cw2-server --image=johnclarkgcu/cw2-server:1.1
