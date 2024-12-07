@@ -57,7 +57,7 @@
   - name: 9. Create bash Script for the Permissions Commands
     become: no
     copy:
-      dest: '/home/ubuntu/ansible/docker.sh'
+      dest: '/home/ubuntu/docker.sh'
       content: |
         #! /bin/bash
         sudo groupadd docker
@@ -68,7 +68,7 @@
 
   - name: 10. Change File permissions so that it can be executed
     file:
-        path: /home/ubuntu/ansible/docker.sh
+        path: /home/ubuntu/docker.sh
         mode: '0755'
 
   - name: 11. Execute Script
