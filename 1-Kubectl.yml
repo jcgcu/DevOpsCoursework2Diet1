@@ -1,0 +1,23 @@
+- name: Install Kubectl
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Install snap
+      apt:
+        name: snapd
+        state: present
+
+    - name: Install kubectl
+      snap:
+        name: kubectl
+        state: present
+        classic: yes
+
+    - name: Get kubectl version
+      command: kubectl version --client
+      register: kubectl_version
+
+    - name: Output kubectl version
+      debug:
+        msg: "kubectl version: {{ kubectl_version.stdout }}"

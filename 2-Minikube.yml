@@ -1,0 +1,34 @@
+- name: Install Minikube
+  hosts: localhost
+  become: no
+
+  tasks:
+    - name: Download Minikube .deb package
+      get_url:
+        url: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+        dest: /tmp/minikube_latest_amd64.deb
+
+    - name: Install Minikube using dpkg
+      command: dpkg -i /tmp/minikube_latest_amd64.deb
+      register: dpkg_result
+      failed_when: dpkg_result.rc != 0  # Fail the task if the dpkg command fails
+
+    - name: Clean up Minikube .deb package
+      file:
+        path: /tmp/minikube_latest_amd64.deb
+        state: absent
+
+    - name: Start Minikube
+      command: minikube start
+      register: minikube_start_result
+      failed_when: minikube_start_result.rc != 0  # Fail if minikube start fails
+      changed_when: minikube_start_result.rc == 0  # Mark as changed if Minikube starts successfully
+
+    - name: Display Minikube status
+      command: minikube status
+      register: minikube_status
+      changed_when: false  # Do not mark this as a change task
+
+    - name: Show Minikube status
+      debug:
+        msg: "Minikube status: {{ minikube_status.stdout }}"
