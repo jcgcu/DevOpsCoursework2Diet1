@@ -1,6 +1,6 @@
 - name: Install Minikube
   hosts: localhost
-  become: no
+  become: yes
 
   tasks:
     - name: Download Minikube .deb package
