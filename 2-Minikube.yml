@@ -19,6 +19,7 @@
         state: absent
 
     - name: Start Minikube
+      become: no
       command: minikube start
       register: minikube_start_result
       failed_when: minikube_start_result.rc != 0  # Fail if minikube start fails
